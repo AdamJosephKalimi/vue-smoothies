@@ -7,19 +7,21 @@
                 <input type="text" name="title" v-model="title">
             </div>
 
-
-            <!-- <ul class="ingredients">
+            <!-- Displays the chips of previously added ingredients -->
+            <ul class="ingredients">
                 <li v-for="(ingredient, index) in ingredients" :key="index">
-                    <span class="chip">{{ ingredient }}
-                        <i class="material-icons clear" @click="deleteIngredient(index)">clear</i>
+                    <span class="chip item-align">{{ ingredient }}
+                        <i class="material-icons clear" @click="deleteIngredient(ingredient)">clear</i>
                     </span>
                     
                 </li>
-            </ul> -->
+            </ul>
 
-            <div v-for="(ingredient, index) in ingredients" :key="index">
+            <!-- Shows the inputs of previously added ingredients -->
+            <div v-for="(ingredient, index) in ingredients" :key="index" class="field">
                 <label for="ingredient">Ingredient:</label>
                 <input type="text" name="ingredient" v-model="ingredients[index]">
+                <i class="material-icons delete" @click="deleteIngredient(ingredient)">delete</i>
             </div>
 
 
@@ -87,30 +89,31 @@ export default {
                 this.feedback = 'Please enter an ingredient to be added'
             }
         },
-        // deleteIngredient(index) {
-        //     console.log("Clear Ingredient", index)
-        //     this.ingredients = this.ingredients.filter( ingredient => {
-        //         return ingredient[index] !== index
-        //     })
-        // }
+        deleteIngredient(ing) {
+            // console.log("Clear Ingredient", ingredient)
+            this.ingredients = this.ingredients.filter( ingredient => {
+                return ingredient !== ing
+            })
+        }
     }
 }
 </script>
 
 <style>
     .add-smoothie {
-        margin-top: 60px;
         padding: 20px;
         max-width: 500px;
+        margin-top: 60px;
     }
 
     .add-smoothie h2 {
-        font-size: 2em;
         margin: 20px auto;
+        font-size: 2em;
     }
 
     .add-smoothie .field {
         margin: 20px auto;
+        position: relative;
     }
 
     .ingredients li {
@@ -118,7 +121,24 @@ export default {
     }
 
     .ingredients .clear {
-        font-size: 1.3em;
+        cursor: pointer;
+        font-size: 1em;
+        margin-left: 5px;
+    }
+
+    .ingredients .item-align {
+        display: flex; 
+        align-items: center;        
+        flex-direction: row; 
+    }
+
+    .add-smoothie .delete {
+        position: absolute;
+        right: 0;
+        bottom: 16px;
+        color: #aaa;
+        cursor: pointer;
+        font-size: 1.4em;
     }
 
 </style>
